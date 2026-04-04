@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coastal Car Care — Mobile Car Wash & Detailing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean: #0057A8;
+    --deep: #003875;
+    --wave: #00A3E0;
+    --foam: #E8F6FF;
+    --sand: #FFF8ED;
+    --gold: #FFB800;
+    --dark: #001A33;
+    --white: #FFFFFF;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--white); color: var(--dark); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(0, 26, 51, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--wave);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon { font-size: 1.6rem; }
+  .nav-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; letter-spacing: 0.08em;
+    color: var(--white); line-height: 1;
+  }
+  .nav-logo-text span { color: var(--wave); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold); color: var(--dark);
+    padding: 0.55rem 1.4rem; border-radius: 50px;
+    font-weight: 700; font-size: 0.82rem; text-decoration: none;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .nav-cta:hover { background: #ffc933; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--dark) 0%, var(--deep) 40%, var(--ocean) 100%);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center;
+    padding: 7rem 2.5rem 4rem;
+  }
+  /* Wave shapes */
+  .hero::before {
+    content: '';
+    position: absolute; bottom: -2px; left: 0; right: 0; height: 160px;
+    background: var(--white);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -2px; left: -5%; right: -5%; height: 120px;
+    background: var(--foam);
+    clip-path: ellipse(60% 100% at 45% 100%);
+    opacity: 0.4;
+  }
+  /* Bubble decoration */
+  .bubble {
+    position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    animation: float 6s ease-in-out infinite;
+  }
+  .bubble:nth-child(1) { width: 300px; height: 300px; top: 10%; right: -5%; animation-delay: 0s; }
+  .bubble:nth-child(2) { width: 180px; height: 180px; top: 50%; right: 20%; animation-delay: 2s; }
+  .bubble:nth-child(3) { width: 80px; height: 80px; top: 20%; right: 30%; animation-delay: 4s; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 620px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,184,0,0.15); border: 1px solid rgba(255,184,0,0.4);
+    color: var(--gold); padding: 6px 16px; border-radius: 50px;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    line-height: 0.95; color: var(--white);
+    margin-bottom: 1.2rem; letter-spacing: 0.02em;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 .highlight { color: var(--wave); display: block; }
+  .hero p {
+    font-size: 1.05rem; color: rgba(255,255,255,0.7);
+    line-height: 1.8; margin-bottom: 2.5rem; max-width: 460px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+  .btn-primary {
+    background: var(--gold); color: var(--dark);
+    padding: 0.9rem 2rem; border-radius: 50px;
+    font-weight: 700; font-size: 0.9rem; text-decoration: none;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    transition: all 0.2s; border: none; cursor: pointer;
+  }
+  .btn-primary:hover { background: #ffc933; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 0.9rem 2rem; border-radius: 50px;
+    font-weight: 700; font-size: 0.9rem; text-decoration: none;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    border: 2px solid rgba(255,255,255,0.35);
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+  .hero-free {
+    margin-top: 2rem;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(0,163,224,0.15); border: 1px solid rgba(0,163,224,0.35);
+    border-radius: 12px; padding: 12px 18px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .hero-free .free-label {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+    color: var(--wave); line-height: 1;
+  }
+  .hero-free .free-sub { font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.4; }
+
+  /* ── SERVICES STRIP ── */
+  .strip {
+    background: var(--ocean); padding: 1rem 2.5rem;
+    display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap;
+  }
+  .strip-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.85);
+  }
+  .strip-item span { font-size: 1rem; }
+
+  /* ── HOW IT WORKS ── */
+  .how { padding: 6rem 2.5rem; background: var(--foam); }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-tag {
+    display: inline-block; background: rgba(0,87,168,0.1);
+    color: var(--ocean); padding: 5px 14px; border-radius: 50px;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3rem); letter-spacing: 0.04em;
+    color: var(--dark);
+  }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 900px; margin: 0 auto; }
+  .step {
+    background: var(--white); border-radius: 20px; padding: 2rem;
+    text-align: center; position: relative;
+    box-shadow: 0 4px 24px rgba(0,87,168,0.08);
+    border: 1px solid rgba(0,87,168,0.08);
+  }
+  .step-num {
+    position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+    background: var(--ocean); color: var(--white);
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem;
+  }
+  .step-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+  .step h3 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
+  .step p { font-size: 0.85rem; color: #5a7a94; line-height: 1.7; }
+
+  /* ── PRICING ── */
+  .pricing { padding: 6rem 2.5rem; background: var(--white); }
+  .pricing-intro { text-align: center; margin-bottom: 1rem; }
+  .pricing-sub { text-align: center; color: #5a7a94; margin-bottom: 3rem; font-size: 0.9rem; }
+
+  /* One-time */
+  .onetime-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 700px; margin: 0 auto 3.5rem; }
+  .onetime-card {
+    border-radius: 16px; padding: 1.8rem;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem;
+  }
+  .onetime-card.wash { background: var(--foam); border: 1px solid rgba(0,87,168,0.12); }
+  .onetime-card.detail { background: var(--deep); }
+  .onetime-card .service-name { font-weight: 700; font-size: 1rem; }
+  .onetime-card.detail .service-name { color: var(--white); }
+  .onetime-card .service-desc { font-size: 0.8rem; color: #5a7a94; margin-top: 3px; }
+  .onetime-card.detail .service-desc { color: rgba(255,255,255,0.6); }
+  .onetime-card .price {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem;
+    color: var(--ocean); white-space: nowrap;
+  }
+  .onetime-card.detail .price { color: var(--gold); }
+
+  /* Packages */
+  .packages-label {
+    text-align: center; font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 0.06em; color: var(--dark);
+    margin-bottom: 1.5rem;
+  }
+  .packages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+  .pkg {
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0,87,168,0.1);
+    border: 1px solid rgba(0,87,168,0.1);
+    display: flex; flex-direction: column;
+    transition: transform 0.2s;
+  }
+  .pkg:hover { transform: translateY(-4px); }
+  .pkg.featured {
+    border: 2px solid var(--ocean);
+    box-shadow: 0 8px 40px rgba(0,87,168,0.2);
+  }
+  .pkg-header { padding: 1.8rem 1.5rem 1.2rem; background: var(--foam); }
+  .pkg.featured .pkg-header { background: var(--ocean); }
+  .pkg-tag {
+    display: inline-block; background: rgba(0,87,168,0.12);
+    color: var(--ocean); padding: 3px 10px; border-radius: 50px;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .pkg.featured .pkg-tag { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.85); }
+  .pkg-name {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+    letter-spacing: 0.04em; color: var(--dark); line-height: 1;
+  }
+  .pkg.featured .pkg-name { color: var(--white); }
+  .pkg-price-row { display: flex; align-items: baseline; gap: 4px; margin-top: 0.5rem; }
+  .pkg-price {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem;
+    color: var(--ocean); line-height: 1;
+  }
+  .pkg.featured .pkg-price { color: var(--gold); }
+  .pkg-per { font-size: 0.78rem; color: #5a7a94; font-weight: 600; }
+  .pkg.featured .pkg-per { color: rgba(255,255,255,0.6); }
+  .pkg-body { padding: 1.5rem; background: var(--white); flex: 1; }
+  .pkg-feature {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 0.6rem 0; border-bottom: 1px solid rgba(0,87,168,0.06);
+    font-size: 0.88rem; line-height: 1.5; color: var(--dark);
+  }
+  .pkg-feature:last-child { border-bottom: none; }
+  .pkg-feature .check { color: var(--ocean); font-size: 0.9rem; margin-top: 1px; flex-shrink: 0; }
+  .pkg-cta { padding: 0 1.5rem 1.5rem; background: var(--white); }
+  .pkg-btn {
+    display: block; text-align: center; width: 100%;
+    background: var(--foam); color: var(--ocean);
+    padding: 0.8rem; border-radius: 50px; border: 2px solid var(--ocean);
+    font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em;
+    text-transform: uppercase; text-decoration: none; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .pkg.featured .pkg-btn { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+  .pkg-btn:hover { background: var(--ocean); color: var(--white); }
+  .pkg.featured .pkg-btn:hover { background: #ffc933; }
+  .per-car-note { text-align: center; margin-top: 1rem; font-size: 0.78rem; color: #5a7a94; }
+
+  /* ── WHY US ── */
+  .why { padding: 6rem 2.5rem; background: var(--deep); }
+  .why .section-header h2 { color: var(--white); }
+  .why .section-tag { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+  .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 960px; margin: 0 auto; }
+  .why-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 1.8rem 1.5rem; text-align: center;
+  }
+  .why-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .why-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .why-card p { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* ── BOOK ── */
+  .book { padding: 6rem 2.5rem; background: var(--sand); }
+  .book-inner {
+    max-width: 600px; margin: 0 auto; text-align: center;
+  }
+  .book h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem); letter-spacing: 0.04em;
+    color: var(--dark); margin-bottom: 0.8rem;
+  }
+  .book p { color: #5a7a94; margin-bottom: 2.5rem; font-size: 0.95rem; }
+  .book-form { display: flex; flex-direction: column; gap: 1rem; text-align: left; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field {
+    background: var(--white); border: 1.5px solid rgba(0,87,168,0.15);
+    border-radius: 12px; padding: 0.85rem 1.1rem;
+    font-family: 'Nunito', sans-serif; font-size: 0.9rem;
+    color: var(--dark); outline: none; transition: border-color 0.2s; width: 100%;
+  }
+  .field:focus { border-color: var(--ocean); }
+  .field::placeholder { color: #aab8c4; }
+  select.field option { background: var(--white); }
+  .submit-btn {
+    background: var(--ocean); color: var(--white);
+    border: none; border-radius: 50px; padding: 1rem;
+    font-family: 'Nunito', sans-serif; font-size: 0.95rem;
+    font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s; margin-top: 0.5rem;
+  }
+  .submit-btn:hover { background: var(--deep); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark); padding: 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+    letter-spacing: 0.06em; color: var(--white);
+  }
+  .footer-logo span { color: var(--wave); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    color: rgba(255,255,255,0.45); text-decoration: none;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.2rem 5rem; }
+    .strip { gap: 1.2rem; padding: 1rem; }
+    .how, .pricing, .why, .book { padding: 4rem 1.2rem; }
+    .steps { grid-template-columns: 1fr; }
+    .onetime-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .packages-grid { grid-template-columns: 1fr 1fr; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.2rem; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-icon">🌊</span>
+    <span class="nav-logo-text">Coastal <span>Car Care</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#book">Inquire</a></li>
+  </ul>
+  <a href="#book" class="nav-cta">Book a Wash</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🌊 Mobile · We Come to You</div>
+    <h1>We Bring the <span class="highlight">Car Wash</span> to You</h1>
+    <p>Professional car wash and detailing at your home, office, or anywhere you park. No trips. No waiting. Just a sparkling clean car.</p>
+    <div class="hero-actions">
+      <a href="#book" class="btn-primary">Book Your Wash</a>
+      <a href="#pricing" class="btn-outline">See Pricing</a>
+    </div>
+    <div class="hero-free">
+      <div class="free-label">FREE</div>
+      <div class="free-sub">First car wash included<br>with any new package signup</div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item"><span>🚗</span> At-Home Service</div>
+  <div class="strip-item"><span>✨</span> Exterior & Detailing</div>
+  <div class="strip-item"><span>📅</span> Monthly Packages</div>
+  <div class="strip-item"><span>🌊</span> Coastal California</div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="how">
+  <div class="section-header">
+    <div class="section-tag">Simple Process</div>
+    <h2>How It Works</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <span class="step-icon">📱</span>
+      <h3>Book Online</h3>
+      <p>Pick your service, choose a time, and tell us where you're parked. Takes 2 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <span class="step-icon">🚐</span>
+      <h3>We Show Up</h3>
+      <p>Our team arrives with everything needed — water, equipment, the works. You don't lift a finger.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <span class="step-icon">✨</span>
+      <h3>Drive Away Clean</h3>
+      <p>Your car comes back spotless. No waiting at a car wash. No wasted Saturday morning.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="pricing">
+  <div class="pricing-intro">
+    <div class="section-tag">Transparent Pricing</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2.2rem,4vw,3rem); letter-spacing:0.04em; margin-top:0.5rem;">Services & Packages</h2>
+  </div>
+  <p class="pricing-sub">One-time washes or save with a monthly package — all at your doorstep.</p>
+
+  <!-- One-time -->
+  <div style="text-align:center; font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.06em; color:#5a7a94; margin-bottom:1rem;">One-Time Services</div>
+  <div class="onetime-grid">
+    <div class="onetime-card wash">
+      <div>
+        <div class="service-name">Car Wash</div>
+        <div class="service-desc">Complete exterior wash</div>
+      </div>
+      <div class="price">$60</div>
+    </div>
+    <div class="onetime-card detail">
+      <div>
+        <div class="service-name">Wash + Detailing</div>
+        <div class="service-desc">Full exterior + detail</div>
+      </div>
+      <div class="price">$80</div>
+    </div>
+  </div>
+
+  <!-- Monthly packages -->
+  <div class="packages-label">Monthly Packages</div>
+  <div class="packages-grid">
+
+    <!-- Basic -->
+    <div class="pkg">
+      <div class="pkg-header">
+        <div class="pkg-tag">Starter</div>
+        <div class="pkg-name">Basic</div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">$120</div>
+          <div class="pkg-per">/ month</div>
+        </div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-feature"><span class="check">✔</span> Complete exterior wash</div>
+        <div class="pkg-feature"><span class="check">✔</span> 3 visits per month</div>
+        <div class="pkg-feature"><span class="check">✔</span> At-home service</div>
+        <div class="pkg-feature"><span class="check">✔</span> Free first wash</div>
+      </div>
+      <div class="pkg-cta"><a href="#book" class="pkg-btn">Get Started</a></div>
+    </div>
+
+    <!-- Basic Plus -->
+    <div class="pkg">
+      <div class="pkg-header">
+        <div class="pkg-tag">Most Popular</div>
+        <div class="pkg-name">Basic Plus</div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">$110</div>
+          <div class="pkg-per">/ mo per car</div>
+        </div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-feature"><span class="check">✔</span> Complete exterior wash</div>
+        <div class="pkg-feature"><span class="check">✔</span> 3 visits per month</div>
+        <div class="pkg-feature"><span class="check">✔</span> Per-car pricing for multiple vehicles</div>
+        <div class="pkg-feature"><span class="check">✔</span> Priority scheduling</div>
+        <div class="pkg-feature"><span class="check">✔</span> Free first wash</div>
+      </div>
+      <div class="pkg-cta"><a href="#book" class="pkg-btn">Get Started</a></div>
+    </div>
+
+    <!-- Coastal -->
+    <div class="pkg">
+      <div class="pkg-header">
+        <div class="pkg-tag">Premium</div>
+        <div class="pkg-name">Coastal</div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">$199</div>
+          <div class="pkg-per">/ month</div>
+        </div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-feature"><span class="check">✔</span> Complete exterior wash</div>
+        <div class="pkg-feature"><span class="check">✔</span> Full detailing included</div>
+        <div class="pkg-feature"><span class="check">✔</span> 3 visits per month</div>
+        <div class="pkg-feature"><span class="check">✔</span> Top-priority scheduling</div>
+        <div class="pkg-feature"><span class="check">✔</span> Free first wash</div>
+      </div>
+      <div class="pkg-cta"><a href="#book" class="pkg-btn">Get Started</a></div>
+    </div>
+
+    <!-- Coastal Plus -->
+    <div class="pkg featured">
+      <div class="pkg-header">
+        <div class="pkg-tag">Multi-Car Premium</div>
+        <div class="pkg-name">Coastal Plus</div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">$186</div>
+          <div class="pkg-per">/ mo per car</div>
+        </div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-feature"><span class="check">✔</span> Complete exterior wash</div>
+        <div class="pkg-feature"><span class="check">✔</span> Full detailing included</div>
+        <div class="pkg-feature"><span class="check">✔</span> 3 visits per month</div>
+        <div class="pkg-feature"><span class="check">✔</span> Per-car pricing for multiple vehicles</div>
+        <div class="pkg-feature"><span class="check">✔</span> Top-priority scheduling</div>
+        <div class="pkg-feature"><span class="check">✔</span> Free first wash</div>
+      </div>
+      <div class="pkg-cta"><a href="#book" class="pkg-btn">Get Started</a></div>
+    </div>
+
+  </div>
+  <p class="per-car-note">* "Per car" packages are designed for households or businesses with multiple vehicles.</p>
+</section>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="section-header">
+    <div class="section-tag">Why Choose Us</div>
+    <h2>The Coastal Difference</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-icon">🏠</span>
+      <h3>We Come to You</h3>
+      <p>No driving, no waiting. We wash at your home, office, or wherever is convenient.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">💧</span>
+      <h3>Pro Equipment</h3>
+      <p>We bring our own water and professional-grade supplies every single time.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">📅</span>
+      <h3>Consistent Schedule</h3>
+      <p>Monthly packages mean your car is always clean — no need to remember to book.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">🌊</span>
+      <h3>Locally Owned</h3>
+      <p>Proud to serve the coastal California community. Your neighbors, your car wash.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INQUIRY -->
+<section id="book" class="book">
+  <div class="book-inner">
+    <div class="section-tag">Contact Us</div>
+    <h2>Send an Inquiry</h2>
+    <p>Have questions or want to learn more before booking? Send us a message and we'll get back to you within a few hours. Ready to go? Hit <strong style="color:var(--ocean)">Get Started</strong> on any package above.</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:2rem;">
+      <div style="background:var(--white); border:1.5px solid rgba(0,87,168,0.12); border-radius:16px; padding:1.4rem; text-align:center;">
+        <div style="font-size:1.6rem; margin-bottom:0.5rem;">📞</div>
+        <div style="font-weight:700; font-size:0.9rem; color:var(--dark); margin-bottom:3px;">Call or Text</div>
+        <a href="tel:+1" style="font-size:0.85rem; color:var(--ocean); text-decoration:none; font-weight:600;">Add your number here</a>
+      </div>
+      <div style="background:var(--white); border:1.5px solid rgba(0,87,168,0.12); border-radius:16px; padding:1.4rem; text-align:center;">
+        <div style="font-size:1.6rem; margin-bottom:0.5rem;">📸</div>
+        <div style="font-weight:700; font-size:0.9rem; color:var(--dark); margin-bottom:3px;">Follow Us</div>
+        <a href="#" style="font-size:0.85rem; color:var(--ocean); text-decoration:none; font-weight:600;">@coastalcarcare</a>
+      </div>
+    </div>
+
+    <div class="book-form">
+      <div class="form-row">
+        <input type="text" class="field" placeholder="Your name">
+        <input type="tel" class="field" placeholder="Phone number">
+      </div>
+      <input type="email" class="field" placeholder="Email address">
+      <select class="field">
+        <option value="">What are you interested in?</option>
+        <option>Car Wash — $60</option>
+        <option>Wash + Detailing — $80</option>
+        <option>Basic Package — $120/mo</option>
+        <option>Basic Plus Package — $110/mo per car</option>
+        <option>Coastal Package — $199/mo</option>
+        <option>Coastal Plus Package — $186/mo per car</option>
+        <option>Not sure yet — just have questions</option>
+      </select>
+      <textarea class="field" rows="4" placeholder="Tell us anything helpful — how many cars, your general area, preferred days, or any questions about our packages..."></textarea>
+      <button class="submit-btn">🌊 Send My Inquiry</button>
+      <p style="text-align:center; font-size:0.78rem; color:#aab8c4; margin-top:0.25rem;">We typically respond within a few hours during business hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Coastal <span>Car Care</span></div>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">Facebook</a>
+    <a href="#">Yelp</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <div class="footer-copy">© 2025 Coastal Car Care. All rights reserved.</div>
+</footer>
+
+<script>
+  const dateInput = document.querySelector('input[type="date"]');
+  if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
